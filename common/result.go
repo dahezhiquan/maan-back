@@ -1,6 +1,6 @@
 package common
 
-import "secureQR/common/errs"
+import "maan/common/errs"
 
 type Result struct {
 	Code errs.ErrorCode `json:"code"`

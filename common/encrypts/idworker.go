@@ -6,8 +6,8 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"fmt"
+	"maan/common/errs"
 	"math/big"
-	"secureQR/common/errs"
 	"sync"
 	"time"
 )

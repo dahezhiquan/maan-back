@@ -3,7 +3,7 @@ package copier
 import (
 	"github.com/jinzhu/copier"
 	"go.uber.org/zap"
-	"secureQR/common/errs"
+	"maan/common/errs"
 )
 
 func Copy(toValue interface{}, fromValue interface{}) *errs.BError {

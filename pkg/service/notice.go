@@ -2,11 +2,11 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
+	"maan/common"
+	"maan/pkg/connections/database/transaction"
+	"maan/pkg/domain"
+	"maan/pkg/dto"
 	"net/http"
-	"secureQR/common"
-	"secureQR/pkg/connections/database/transaction"
-	"secureQR/pkg/domain"
-	"secureQR/pkg/dto"
 )
 
 type HandlerNotice struct {
@@ -35,6 +35,11 @@ func (h *HandlerNotice) FindNotice(ctx *gin.Context) {
 	// 将notices的值 移植 到resp中
 	for _, notice := range notices {
 		resp.NoticeList = append(resp.NoticeList, notice.Title)
+	}
+
+	// 防止返回 null 值
+	if resp.NoticeList == nil {
+		resp.NoticeList = make([]string, 0)
 	}
 
 	ctx.JSON(http.StatusOK, result.Success(resp))

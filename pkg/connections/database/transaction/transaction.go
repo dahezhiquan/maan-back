@@ -1,9 +1,9 @@
 package transaction
 
 import (
-	"secureQR/common/errs"
-	"secureQR/pkg/connections/database"
-	"secureQR/pkg/connections/database/gorms"
+	"maan/common/errs"
+	"maan/pkg/connections/database"
+	"maan/pkg/connections/database/gorms"
 )
 
 type Transaction struct {

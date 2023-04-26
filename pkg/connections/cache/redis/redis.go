@@ -3,7 +3,7 @@ package redis
 import (
 	"context"
 	"github.com/go-redis/redis/v8"
-	"secureQR/config"
+	"maan/config"
 	"time"
 )
 

@@ -4,7 +4,7 @@ const (
 	ParameterVerifyErrCode = 100002
 )
 
-// 系统/中间件错误 5xxxix
+// 系统 - 中间件错误 5xxxix
 var (
 	DBError     = NewError(500001, "DB错误")
 	CacheError  = NewError(500002, "Cache错误")
@@ -23,11 +23,15 @@ var (
 	// 全局错误
 
 	ClockMovedBackwards      = NewError(200001, "系统时钟异常")
-	WorkerIdExcessOfQuantity = NewError(200010, "ID超量")
+	WorkerIdExcessOfQuantity = NewError(200002, "ID超量")
 
 	// NoticeNotExistError 公告错误
 
-	NoticeNotExistError = NewError(210001, "公告不存在")
+	NoticeNotExistError = NewError(201001, "公告不存在")
+
+	// PictureNotExistError 图片查询错误
+
+	PictureNotExistError = NewError(202001, "图片不存在")
 )
 
 // 第三方应用错误 3xxxix

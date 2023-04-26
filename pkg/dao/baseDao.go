@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"secureQR/pkg/connections/database"
-	"secureQR/pkg/connections/database/gorms"
+	"maan/pkg/connections/database"
+	"maan/pkg/connections/database/gorms"
 )
 
 type baseDao struct {

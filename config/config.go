@@ -4,9 +4,9 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/spf13/viper"
 	"log"
+	"maan/common/logs"
 	"path"
 	"runtime"
-	"secureQR/common/logs"
 )
 
 var Conf = InitConfig()

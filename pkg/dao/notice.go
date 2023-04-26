@@ -3,9 +3,9 @@ package dao
 import (
 	"context"
 	"gorm.io/gorm"
-	"secureQR/pkg/connections/database"
-	"secureQR/pkg/connections/database/gorms"
-	"secureQR/pkg/model"
+	"maan/pkg/connections/database"
+	"maan/pkg/connections/database/gorms"
+	"maan/pkg/model"
 )
 
 type NoticeDao struct {

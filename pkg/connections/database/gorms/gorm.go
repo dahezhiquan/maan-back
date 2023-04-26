@@ -6,7 +6,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"secureQR/config"
+	"maan/config"
 )
 
 var _db *gorm.DB

@@ -3,7 +3,7 @@ package test
 import (
 	"context"
 	"log"
-	"secureQR/pkg/dao"
+	"maan/pkg/dao"
 	"testing"
 	"time"
 )

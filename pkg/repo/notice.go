@@ -2,8 +2,8 @@ package repo
 
 import (
 	"context"
-	"secureQR/pkg/connections/database"
-	"secureQR/pkg/model"
+	"maan/pkg/connections/database"
+	"maan/pkg/model"
 )
 
 type NoticeRepo interface {

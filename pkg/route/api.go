@@ -1,5 +1,6 @@
 package route
 
 import (
-	_ "secureQR/pkg/route/notice"
+	_ "maan/pkg/route/notice"
+	_ "maan/pkg/route/picture"
 )

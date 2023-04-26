@@ -3,8 +3,8 @@ package notice
 import (
 	"github.com/gin-gonic/gin"
 	"log"
-	"secureQR/common"
-	"secureQR/pkg/service"
+	"maan/common"
+	"maan/pkg/service"
 )
 
 func init() {

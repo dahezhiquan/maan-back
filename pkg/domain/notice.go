@@ -3,10 +3,10 @@ package domain
 import (
 	"context"
 	"go.uber.org/zap"
-	"secureQR/common/errs"
-	"secureQR/pkg/dao"
-	"secureQR/pkg/model"
-	"secureQR/pkg/repo"
+	"maan/common/errs"
+	"maan/pkg/dao"
+	"maan/pkg/model"
+	"maan/pkg/repo"
 	"time"
 )
 
@@ -27,7 +27,7 @@ func (n *NoticeDomain) FindNotice() ([]*model.Notice, *errs.BError) {
 	defer cancel()
 	notices, err := n.noticeRepo.FindNotice(nil, ctx)
 	if err != nil {
-		zap.L().Error("NoticeInfo DB FindNotice error", zap.Error(err))
+		zap.L().Error("Notice DB FindNotice error", zap.Error(err))
 		return nil, errs.DBError
 	}
 	if notices == nil {
