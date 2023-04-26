@@ -1,0 +1,23 @@
+server:
+  name: "maan"
+  addr: "127.0.0.1:8080"
+mysql:
+  username: maan
+  password: maan245074472!
+  host: bj-cynosdbmysql-grp-4xo246xm.sql.tencentcdb.com
+  port: 20321
+  db: maan
+  maxOpenConns: 100
+  maxIdleConns: 20
+cache:
+  host: "127.0.0.1"
+  port: 6379
+  password: ""
+  db: 0
+zap:
+  debugFileName: "/home/sth/project/m-sec/logs/debug/project-debug.log"
+  infoFileName: "/home/sth/project/m-sec/logs/info/project-info.log"
+  warnFileName: "/home/sth/project/m-sec/logs/error/project-error.log"
+  maxSize: 500,
+  maxAge: 28,
+  MaxBackups: 3
