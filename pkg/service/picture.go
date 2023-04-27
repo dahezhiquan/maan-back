@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"maan/common"
+	"maan/common/copier"
 	"maan/common/errs"
 	"maan/pkg/connections/database/transaction"
 	"maan/pkg/domain"
@@ -48,13 +49,15 @@ func (h *HandlerPicture) FindPicture(ctx *gin.Context) {
 		return
 	}
 
-	for _, pic := range pics {
-		resp.PictureList = append(resp.PictureList, pic.Src)
+	// 将pics的值 移植 到resp中
+	if err := copier.Copy(&resp.PictureList, pics); err != nil {
+		ctx.JSON(http.StatusOK, result.Fail(err))
+		return
 	}
 
 	// 防止返回 null 值
 	if resp.PictureList == nil {
-		resp.PictureList = make([]string, 0)
+		resp.PictureList = make([]dto.PictureInfo, 0)
 	}
 
 	ctx.JSON(http.StatusOK, result.Success(resp))
