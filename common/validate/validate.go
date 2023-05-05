@@ -69,3 +69,11 @@ func VerifyWechatFormat(wechat string) bool {
 	reg := regexp.MustCompile(pattern)
 	return reg.MatchString(wechat)
 }
+
+// URL正则判断
+
+func VerifyUrlFormat(url string) bool {
+	pattern := `^(http|https)://`
+	reg := regexp.MustCompile(pattern)
+	return reg.MatchString(url)
+}
