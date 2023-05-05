@@ -24,6 +24,9 @@ var (
 
 	ClockMovedBackwards      = NewError(200001, "系统时钟异常")
 	WorkerIdExcessOfQuantity = NewError(200002, "ID超量")
+	IpAddrSearchError        = NewError(200004, "IP解析错误")
+	StrToJsonError           = NewError(200003, "字符串转json错误")
+	IoCloseError             = NewError(200005, "io资源未正常关闭")
 
 	// NoticeNotExistError 公告错误
 

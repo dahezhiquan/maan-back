@@ -1,6 +1,11 @@
 package tms
 
-import "time"
+import (
+	"log"
+	"net"
+	"net/url"
+	"time"
+)
 
 // 将类似2023-03-29T14:15:20+08:00这样的字符串时间类型转为time类型，方便时间的运算
 
@@ -41,4 +46,24 @@ func GetTodayTS() int64 {
 
 func GetNowTimeFloat64() float64 {
 	return float64(time.Now().UnixNano())
+}
+
+// 将url转换为ip地址
+
+func UrlToIp(urlContent string) string {
+
+	u, err := url.Parse(urlContent)
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+
+	host := u.Hostname()
+
+	ipAddr, err := net.ResolveIPAddr("ip", host)
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+	return ipAddr.IP.String()
 }
