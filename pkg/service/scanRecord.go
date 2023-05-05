@@ -71,6 +71,13 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 		risk = public.UnSafeIpAddr
 	}
 
+	// 第二关，尝试命中恶意ip库
+	hackerIpCheck := fuckqr.HackerIpCheck(ip)
+	if !hackerIpCheck {
+		mvss -= public.RelHackerIpMvss
+		risk = public.RelHackerIp
+	}
+
 	resp.Mvss = mvss
 	resp.IpAddr = ipInfo.Adcode.O
 	resp.RiskType = risk
