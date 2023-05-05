@@ -10,6 +10,8 @@ import (
 	validate2 "maan/common/validate"
 	"maan/pkg/connections/database/transaction"
 	"maan/pkg/dto"
+	"maan/pkg/fuckqr"
+	"maan/pkg/public"
 	"net/http"
 )
 
@@ -27,6 +29,11 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 	var result = &common.Result{}
 	var req = dto.QrScanReq{}
 	var resp = dto.QrScanResp{}
+
+	// mvss初始分数
+	var mvss int = 100
+	// 风险类型
+	var risk string = public.InitType
 
 	// 参数绑定
 	if err := ctx.ShouldBind(&req); err != nil {
@@ -57,9 +64,16 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, result.Fail(err))
 	}
 
-	resp.Mvss = 0
+	// 第一关，ip归属地威胁分析
+	check := fuckqr.IpAddrCheck(ipInfo.Adcode.O)
+	if !check {
+		mvss -= public.UnSafeIpAddrMvss
+		risk = public.UnSafeIpAddr
+	}
+
+	resp.Mvss = mvss
 	resp.IpAddr = ipInfo.Adcode.O
-	resp.RiskType = "未知类型"
+	resp.RiskType = risk
 
 	ctx.JSON(http.StatusOK, result.Success(resp))
 	return
