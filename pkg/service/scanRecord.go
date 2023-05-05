@@ -64,14 +64,21 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, result.Fail(err))
 	}
 
-	// 第一关，ip归属地威胁分析
+	// 验证ssl证书的有效性
+	sslCheck := fuckqr.SslCheck(req.Content)
+	if !sslCheck {
+		mvss -= public.UnSafeSslMvss
+		risk = public.UnSafeSsl
+	}
+
+	// ip归属地威胁分析
 	check := fuckqr.IpAddrCheck(ipInfo.Adcode.O)
 	if !check {
 		mvss -= public.UnSafeIpAddrMvss
 		risk = public.UnSafeIpAddr
 	}
 
-	// 第二关，尝试命中恶意ip库
+	// 尝试命中恶意ip库
 	hackerIpCheck := fuckqr.HackerIpCheck(ip)
 	if !hackerIpCheck {
 		mvss -= public.RelHackerIpMvss

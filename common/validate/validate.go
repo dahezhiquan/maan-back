@@ -77,3 +77,11 @@ func VerifyUrlFormat(url string) bool {
 	reg := regexp.MustCompile(pattern)
 	return reg.MatchString(url)
 }
+
+// IP地址正则判断
+
+func VerifyIpFormat(ip string) bool {
+	pattern := `^(\d{1,3}\.){3}\d{1,3}$`
+	reg := regexp.MustCompile(pattern)
+	return reg.MatchString(ip)
+}
