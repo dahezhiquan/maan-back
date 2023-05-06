@@ -95,10 +95,15 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 		risk = public.RelHackerIp
 	}
 
+	if isPassDfa {
+		resp.IsPassDfa = 1
+	} else {
+		resp.IsPassDfa = 0
+	}
+
 	resp.Mvss = mvss
 	resp.IpAddr = ipInfo.Adcode.O
 	resp.RiskType = risk
-	resp.IsPassDfa = isPassDfa
 	resp.UrlTitle = urlTitle
 
 	ctx.JSON(http.StatusOK, result.Success(resp))

@@ -12,6 +12,6 @@ type QrScanResp struct {
 	Mvss      int    `json:"mvss"`
 	IpAddr    string `json:"ip_addr"`
 	RiskType  string `json:"risk_type"`
-	IsPassDfa bool   `json:"is_pass_dfa"`
+	IsPassDfa int    `json:"is_pass_dfa"`
 	UrlTitle  string `json:"url_title"`
 }
