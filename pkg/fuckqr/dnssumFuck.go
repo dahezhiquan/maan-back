@@ -10,7 +10,7 @@ import (
 func DnsSafeCheck(url string) bool {
 	cname, err := net.LookupCNAME(url)
 	if err != nil {
-		return false
+		return true
 	}
 	log.Println(cname)
 	return false

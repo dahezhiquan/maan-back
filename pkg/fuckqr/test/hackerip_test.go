@@ -1,4 +1,4 @@
-package fuckqr
+package test
 
 import (
 	"bufio"

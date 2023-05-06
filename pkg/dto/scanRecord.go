@@ -9,7 +9,9 @@ type QrScanReq struct {
 // 解析完成的二维码数据 resp
 
 type QrScanResp struct {
-	Mvss     int    `json:"mvss"`
-	IpAddr   string `json:"ip_addr"`
-	RiskType string `json:"risk_type"`
+	Mvss      int    `json:"mvss"`
+	IpAddr    string `json:"ip_addr"`
+	RiskType  string `json:"risk_type"`
+	IsPassDfa bool   `json:"is_pass_dfa"`
+	UrlTitle  string `json:"url_title"`
 }

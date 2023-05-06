@@ -31,9 +31,9 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 	var resp = dto.QrScanResp{}
 
 	// mvss初始分数
-	var mvss int = 100
+	var mvss = 100
 	// 风险类型
-	var risk string = public.InitType
+	var risk = public.InitType
 
 	// 参数绑定
 	if err := ctx.ShouldBind(&req); err != nil {
@@ -64,6 +64,16 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, result.Fail(err))
 	}
 
+	// 检测html文档内容风险
+	subMvss, urlTitle, isPassDfa := fuckqr.UrlContentCheck(req.Content)
+	if subMvss >= 21 {
+		mvss -= subMvss
+		risk = public.UnSafeDocContent
+	} else {
+		mvss -= subMvss
+		risk = public.UnSafeFormOrJs
+	}
+
 	// 验证ssl证书的有效性
 	sslCheck := fuckqr.SslCheck(req.Content)
 	if !sslCheck {
@@ -88,6 +98,8 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 	resp.Mvss = mvss
 	resp.IpAddr = ipInfo.Adcode.O
 	resp.RiskType = risk
+	resp.IsPassDfa = isPassDfa
+	resp.UrlTitle = urlTitle
 
 	ctx.JSON(http.StatusOK, result.Success(resp))
 	return
