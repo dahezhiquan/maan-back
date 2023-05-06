@@ -20,7 +20,7 @@ func IpAddrCheck(ipAddr string) bool {
 	}
 
 	// 国外服务加白
-	safeServer := []string{"GitHub"}
+	safeServer := []string{"GitHub", "腾讯"}
 	for _, s := range safeServer {
 		if strings.Contains(ipAddr, s) {
 			flag = true
