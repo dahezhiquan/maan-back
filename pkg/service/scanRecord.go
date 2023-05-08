@@ -124,6 +124,12 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 	resp.RiskType = risk
 	resp.UrlTitle = urlTitle
 
+	// 进行更细粒度的风险检测
+	riskAnalyzer := fuckqr.RiskAnalyzer(resp)
+	if riskAnalyzer != "" {
+		resp.RiskType = riskAnalyzer
+	}
+
 	ctx.JSON(http.StatusOK, result.Success(resp))
 	return
 }

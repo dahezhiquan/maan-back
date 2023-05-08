@@ -18,3 +18,8 @@ const (
 	UnSafeContent            = "不安全的扫描内容"
 	UnSafeContentMvss        = 41
 )
+
+const (
+	XianYuRisk = "闲鱼自动收货诈骗"
+	PayRisk    = "支付类（免密支付）诈骗"
+)
