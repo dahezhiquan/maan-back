@@ -18,7 +18,7 @@ func UrlContentCheck(urlContent string) (subMvss int, urlTitle string, isPassDfa
 	// 解析url
 	resp, err := http.Get(urlContent)
 	if err != nil {
-		return subMvss, "无", true
+		return subMvss, "无", false
 	}
 	defer func(Body io.ReadCloser) {
 		_ = Body.Close()
@@ -27,7 +27,7 @@ func UrlContentCheck(urlContent string) (subMvss int, urlTitle string, isPassDfa
 	// 得到html文档的内容
 	doc, err := goquery.NewDocumentFromReader(resp.Body)
 	if err != nil {
-		return subMvss, "无", true
+		return subMvss, "无", false
 	}
 
 	// 得到文档标题，尝试dfa命中
