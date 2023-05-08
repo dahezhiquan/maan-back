@@ -51,7 +51,25 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 
 	// 判断扫描结果是否是一个url类型的地址，如果是，则进行地址风险检测，否则对内容进行检测
 	if !validate2.VerifyUrlFormat(req.Content) {
-		// TODO 内容风险检测算法
+
+		// 检测扫描内容风险
+		subMvss, isPassDfa := fuckqr.ContentCheck(req.Content)
+		if subMvss >= 41 {
+			mvss -= subMvss
+			risk = public.UnSafeContent
+		} else {
+			mvss -= subMvss
+		}
+
+		if isPassDfa {
+			resp.IsPassDfa = 1
+		} else {
+			resp.IsPassDfa = 0
+		}
+
+		resp.Mvss = mvss
+		resp.RiskType = risk
+
 		ctx.JSON(http.StatusOK, result.Success(resp))
 		return
 	}

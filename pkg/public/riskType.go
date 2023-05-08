@@ -15,4 +15,6 @@ const (
 	UnSafeFormMvss           = 5
 	UnSafeInlineScriptMvss   = 1
 	UnSafeInsecureScriptMvss = 2
+	UnSafeContent            = "不安全的扫描内容"
+	UnSafeContentMvss        = 41
 )
