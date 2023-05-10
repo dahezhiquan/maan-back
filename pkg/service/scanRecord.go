@@ -181,6 +181,12 @@ func (h *HandlerScanRecord) FindScanRecord(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, result.Fail(err))
 	}
 
+	for _, scanRecord := range scanRecords {
+		if len(scanRecord.Content) > 50 {
+			scanRecord.Content = scanRecord.Content[0:50] + "..."
+		}
+	}
+
 	if err := copier.Copy(&resp.IntelligenceList, scanRecords); err != nil {
 		ctx.JSON(http.StatusOK, result.Fail(err))
 		return
