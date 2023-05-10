@@ -5,23 +5,28 @@ import (
 	"github.com/go-playground/validator/v10"
 	"maan/common"
 	"maan/common/api"
+	"maan/common/copier"
 	"maan/common/errs"
 	"maan/common/tms"
 	validate2 "maan/common/validate"
 	"maan/pkg/connections/database/transaction"
+	"maan/pkg/domain"
 	"maan/pkg/dto"
 	"maan/pkg/fuckqr"
+	"maan/pkg/model"
 	"maan/pkg/public"
 	"net/http"
 )
 
 type HandlerScanRecord struct {
-	tx *transaction.Transaction
+	scanRecordDomain *domain.ScanRecordDomain
+	tx               *transaction.Transaction
 }
 
 func NewHandlerScanRecord() *HandlerScanRecord {
 	return &HandlerScanRecord{
-		tx: transaction.NewTransaction(),
+		scanRecordDomain: domain.NewScanRecordDomain(),
+		tx:               transaction.NewTransaction(),
 	}
 }
 
@@ -128,6 +133,62 @@ func (h *HandlerScanRecord) AnalysisQrScan(ctx *gin.Context) {
 	riskAnalyzer := fuckqr.RiskAnalyzer(resp)
 	if riskAnalyzer != "" {
 		resp.RiskType = riskAnalyzer
+	}
+
+	// 保存扫描结果到数据库
+	_ = h.SaveScanRecord(resp, req)
+
+	ctx.JSON(http.StatusOK, result.Success(resp))
+	return
+}
+
+// 保存扫描结果到数据库
+
+func (h *HandlerScanRecord) SaveScanRecord(resp dto.QrScanResp, resp2 dto.QrScanReq) *errs.BError {
+
+	isSafeFlag := 1
+	if resp.Mvss >= 60 && resp.Mvss < 80 {
+		isSafeFlag = 2
+	}
+
+	if resp.Mvss < 60 {
+		isSafeFlag = 3
+	}
+
+	scanRecord := &model.ScanRecord{
+		Content:      resp2.Content,
+		Mvss:         int32(resp.Mvss),
+		IpAddr:       resp.IpAddr,
+		RiskType:     resp.RiskType,
+		ContentTitle: resp.UrlTitle,
+		IsDfa:        int32(resp.IsPassDfa),
+		IsSafe:       int32(isSafeFlag),
+	}
+
+	err := h.scanRecordDomain.SaveScanRecord(scanRecord)
+	return err
+}
+
+// 返回情报信息
+
+func (h *HandlerScanRecord) FindScanRecord(ctx *gin.Context) {
+	var result = &common.Result{}
+	var resp = dto.IntelligenceResp{}
+
+	// 得到最近20条扫描结果
+	scanRecords, err := h.scanRecordDomain.FindScanRecord()
+	if err != nil {
+		ctx.JSON(http.StatusOK, result.Fail(err))
+	}
+
+	if err := copier.Copy(&resp.IntelligenceList, scanRecords); err != nil {
+		ctx.JSON(http.StatusOK, result.Fail(err))
+		return
+	}
+
+	// 防止返回 null 值
+	if resp.IntelligenceList == nil {
+		resp.IntelligenceList = make([]*dto.Intelligence, 0)
 	}
 
 	ctx.JSON(http.StatusOK, result.Success(resp))

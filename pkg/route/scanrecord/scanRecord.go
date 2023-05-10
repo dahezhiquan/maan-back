@@ -19,4 +19,5 @@ func (*RouterScanRecord) Route(r *gin.Engine) {
 	h := service.NewHandlerScanRecord()
 	g := r.Group("/scan")
 	g.GET("/info", h.AnalysisQrScan)
+	g.GET("/intelligence", h.FindScanRecord)
 }

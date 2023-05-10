@@ -6,6 +6,7 @@ import (
 	"maan/pkg/connections/database"
 	"maan/pkg/connections/database/gorms"
 	"maan/pkg/model"
+	"maan/pkg/public"
 )
 
 type PictureDao struct {
@@ -21,7 +22,7 @@ func NewPictureDao() *PictureDao {
 func (p *PictureDao) FindPic(tx database.DbConn, ctx context.Context, picType string) (pics []*model.Picture, err error) {
 	conn := p.getConn(tx)
 
-	err = conn.Session(ctx).Order("created_at desc").Limit(4).Where("type = ?", picType).Find(&pics).Error
+	err = conn.Session(ctx).Order("created_at desc").Limit(public.PicturePageSize).Where("type = ?", picType).Find(&pics).Error
 	if err == gorm.ErrRecordNotFound {
 		return nil, nil
 	}

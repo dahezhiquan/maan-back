@@ -15,3 +15,18 @@ type QrScanResp struct {
 	IsPassDfa int    `json:"is_pass_dfa"`
 	UrlTitle  string `json:"url_title"`
 }
+
+type IntelligenceResp struct {
+	IntelligenceList []*Intelligence `json:"intelligence_list"`
+}
+
+type Intelligence struct {
+	ID           int64  `json:"id"`
+	Content      string `json:"content"`       // 解析内容
+	Mvss         int32  `json:"mvss"`          // MVSS分数
+	IpAddr       string `json:"ip_addr"`       // 解析ip
+	RiskType     string `json:"risk_type"`     // 风险类型
+	ContentTitle string `json:"content_title"` // 扫描标题
+	IsSafe       int32  `json:"is_safe"`       // 是否安全（1 - 安全 2 - 警告 3 - 危险）
+	IsDfa        int32  `json:"is_dfa"`        // 是否涉黄涉黑涉政（1 - 涉及 0 - 不涉及）
+}

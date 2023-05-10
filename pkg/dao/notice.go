@@ -6,6 +6,7 @@ import (
 	"maan/pkg/connections/database"
 	"maan/pkg/connections/database/gorms"
 	"maan/pkg/model"
+	"maan/pkg/public"
 )
 
 type NoticeDao struct {
@@ -21,7 +22,7 @@ func NewNoticeDao() *NoticeDao {
 func (n *NoticeDao) FindNotice(tx database.DbConn, ctx context.Context) (notices []*model.Notice, err error) {
 	conn := n.getConn(tx)
 
-	err = conn.Session(ctx).Order("created_at desc").Limit(5).Find(&notices).Error
+	err = conn.Session(ctx).Order("created_at desc").Limit(public.NoticePageSize).Find(&notices).Error
 	if err == gorm.ErrRecordNotFound {
 		return nil, nil
 	}
