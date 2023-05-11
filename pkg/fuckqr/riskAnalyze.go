@@ -16,5 +16,8 @@ func RiskAnalyzer(resp dto.QrScanResp) string {
 	if strings.Contains(resp.UrlTitle, "支付") {
 		return public.PayRisk
 	}
+	if resp.IsPassDfa == 1 {
+		return public.PornRisk
+	}
 	return ""
 }

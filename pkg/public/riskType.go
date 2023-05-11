@@ -22,4 +22,5 @@ const (
 const (
 	XianYuRisk = "闲鱼自动收货诈骗"
 	PayRisk    = "支付类（免密支付）诈骗"
+	PornRisk   = "违法诈骗码"
 )
