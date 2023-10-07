@@ -3,9 +3,9 @@ server:
   addr: ":8080"
 mysql:
   username: maan
-  password: maan245074472!
-  host: bj-cynosdbmysql-grp-4xo246xm.sql.tencentcdb.com
-  port: 20321
+  password: yyy
+  host: xxx
+  port: 8888
   db: maan
   maxOpenConns: 100
   maxIdleConns: 20
